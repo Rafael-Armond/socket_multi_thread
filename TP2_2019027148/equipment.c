@@ -15,6 +15,8 @@
 
 int equipment_id = 0;
 int id_equipments[15];
+int num_equipments_connected = 0;
+int target_equip_id = 0;
 
 struct client_data
 {
@@ -33,13 +35,12 @@ void *receiver(void *data)
 {
     struct client_data *cdata = (struct client_data *)data;
     char buf[BUFFER_SIZE];
-    // char msg[BUFFER_SIZE];
+    char msg[BUFFER_SIZE];
     char substr[3]; // Guarda os comandos vindos do cliente
 
     while (1)
     {
         memset(buf, 0, BUFFER_SIZE);
-        // memset(msg, 0, BUFFER_SIZE);
         size_t count = recv(cdata->csock, buf, BUFFER_SIZE - 1, 0);
         if (!count)
         {
@@ -54,7 +55,6 @@ void *receiver(void *data)
             strncpy(substr, buf, 2); // Os comandos vindos do cliente são sempre os dois primeiros digitos do payload
             substr[2] = '\0';
             int comando = atoi(substr);
-            // int id_equipment_i = 0;
 
             switch (comando)
             {
@@ -73,19 +73,52 @@ void *receiver(void *data)
                 else
                 {
                     if (equip_id_int < 10)
+                    {
                         printf("Equipment 0%d added\n", equip_id_int);
+                        id_equipments[num_equipments_connected] = equip_id_int;
+                    }
                     else
+                    {
                         printf("Equipment %d added\n", equip_id_int);
+                        id_equipments[num_equipments_connected] = equip_id_int;
+                    }
+                    num_equipments_connected++;
                 }
                 break;
             case 2:
                 strncpy(substr, buf + 5, 2); // Pega o ID do equipamento que foi removido
                 substr[2] = '\0';
                 int id_equipment_i = atoi(substr);
-                if (id_equipment_i < 10)
+                if (id_equipment_i < 10 && id_equipment_i != equipment_id)
                     printf("Equipment 0%d removed\n", id_equipment_i);
-                else
+                else if (id_equipment_i != equipment_id)
                     printf("Equipment %d removed\n", id_equipment_i);
+                else if (id_equipment_i == equipment_id)
+                {
+                    printf("Successful removal\n");
+                    exit(EXIT_SUCCESS);
+                }
+                break;
+            case 3:
+                memset(msg, 0, BUFFER_SIZE);
+                strcpy(msg, buf + 6); // Atribui a msg a string contendo a lista de IDs de equipamentos conectados
+                printf("%s\n", msg);
+                break;
+            case 4:
+                memset(msg, 0, BUFFER_SIZE);
+                strcpy(msg, buf + 5);
+                if (target_equip_id < 10)
+                    printf("Value from 0%d: %s\n", target_equip_id, msg);
+                else
+                    printf("Value from %d: %s\n", target_equip_id, msg);
+                break;
+            case 5:
+                memset(msg, 0, BUFFER_SIZE);
+                strcpy(msg, buf + 5);
+                printf("%s\n", msg);
+                break;
+            case 6:
+                printf("Target equipment not found\n");
                 break;
             default:
                 printf("nenhum comando reconhecido\n");
@@ -182,63 +215,23 @@ int main(int argc, char **argv)
                 {
                     break;
                 }
-                memset(buf, 0, BUFFER_SIZE);
-                // Recebe a mensagem de confirmação enviada pelo servidor, informando que foi removido do sistema
-                count = recv(s, buf, BUFFER_SIZE - 1, 0);
-                memset(buf, 0, BUFFER_SIZE);
-                if (!count)
-                {
-                    close(s);
-                    exit(EXIT_SUCCESS);
-                }
-                else
-                {
-                    printf("Successful removal\n");
-                }
             }
             else if (strcmp(buf, "list equipment\n") == 0 || strcmp(buf, "list equipment") == 0 || strcmp(buf, "list equipment\0") == 0)
             {
-                int aux = 0;
-                for (int i = 0; i < 15; i++)
+                if (equipment_id < 10)
+                    sprintf(buf, "04xxx0%d", equipment_id);
+                else
+                    sprintf(buf, "04xxx%d", equipment_id);
+
+                strtok(buf, "\0");
+                size_t count = send(s, buf, strlen(buf) + 1, 0);
+                if (count != strlen(buf) + 1)
                 {
-                    if (id_equipments[i] != 0)
-                    {
-                        if (equipment_id != (i + 1))
-                        {
-                            if (aux == 0)
-                            {
-                                if (i < 10)
-                                {
-                                    aux = 1;
-                                    printf("0%d", (i + 1));
-                                }
-                                else
-                                {
-                                    aux = 1;
-                                    printf("%d", (i + 1));
-                                }
-                            }
-                            else
-                            {
-                                if (i < 10)
-                                {
-                                    aux = 1;
-                                    printf("0%d", (i + 1));
-                                }
-                                else
-                                {
-                                    aux = 1;
-                                    printf("%d", (i + 1));
-                                }
-                            }
-                        }
-                    }
+                    logexit("send");
                 }
-                printf("\n");
             }
             else
             {
-                // Trata a entrada: "request information from <id>"
                 strncpy(substr, buf, 25);
                 substr[24] = '\0';
                 if (strcmp(substr, "request information from \n") == 0 || strcmp(substr, "request information from") == 0)
@@ -246,7 +239,7 @@ int main(int argc, char **argv)
                     // Substr guardará o valor do ID do equipamento a ser requerido
                     strncpy(substr, buf + 25, 2);
                     substr[2] = '\0';
-                    int target_equip_id = atoi(substr);
+                    target_equip_id = atoi(substr);
                     if (equipment_id < 10 && target_equip_id < 10)
                         sprintf(buf, "030%d0%d", equipment_id, target_equip_id);
                     else if (equipment_id >= 10 && target_equip_id >= 10)
@@ -261,7 +254,7 @@ int main(int argc, char **argv)
             }
         }
     }
-    printf("passou por aqui 3 ???\n");
+
     close(s);
     exit(EXIT_SUCCESS);
 }
@@ -271,4 +264,5 @@ Códigos que o cliente envia para o servidor (client -> server):
     1- Cliente abrindo conexão com o servidor
     2- Cliente encerrando conexão com o servidor
     3- Cliente envia mensagem "request information from <id>" para o servidor
+    4- Cliente envia mensagem "list equipment" para o servidor
 */

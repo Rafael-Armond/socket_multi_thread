@@ -6,7 +6,7 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Jun 22 18:51:51 2022
+# Make data base, printed on Fri Jun 24 18:03:00 2022
 
 # Variables
 
@@ -59,7 +59,7 @@ PROGRAMW6432 = C:\Program Files
 # environment
 PROGRAMDATA = C:\ProgramData
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-d9c6527f-7298-4e3c-b1d6-80191f63f567-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-ebfd74d5-4457-41b3-9551-03180a75e7a2-sock
 # environment
 VSCODE_CWD = C:\Users\DTI Digital\AppData\Local\Programs\Microsoft VS Code
 # default
@@ -91,7 +91,7 @@ ELECTRON_RUN_AS_NODE = 1
 # automatic
 %F = $(notdir $%)
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_38072_LYWRGSPCEFUPBANU
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_19876_RSGLZKGDCUMFCNRO
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
@@ -203,7 +203,7 @@ PROCESSOR_LEVEL = 6
 # environment
 FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
-VSCODE_PID = 38072
+VSCODE_PID = 19876
 # environment
 USERDOMAIN_ROAMINGPROFILE = DPCRAFAELMAIA
 # variable set hash-table stats:
@@ -215,7 +215,7 @@ USERDOMAIN_ROAMINGPROFILE = DPCRAFAELMAIA
 
 # Directories
 
-# . (key c:/Users/DTI Digital/Desktop/TP2_2019027148, mtime 1655871429): 11 files, no impossibilities.
+# . (key c:/Users/DTI Digital/Desktop/TP2_2019027148, mtime 1656102148): 11 files, no impossibilities.
 
 # 11 files, no impossibilities in 1 directories.
 
@@ -264,7 +264,7 @@ all:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-20 18:27:33
+#  Last modified 2022-06-22 20:12:59
 #  File has been updated.
 #  Successfully updated.
 
@@ -279,7 +279,7 @@ clean:
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 7):
-	rm common.o client server
+	rm common.o equipment server
 
 # files hash-table stats:
 # Load=5/1024=0%, Rehash=0, Collisions=0/17=0%
@@ -295,7 +295,6 @@ clean:
 # strcache performance: lookups = 23 / hit rate = 34%
 # hash-table stats:
 # Load=15/8192=0%, Rehash=0, Collisions=1/23=4%
-# Finished Make data base on Wed  
-Jun 22 18:51:51 2022
+# Finished Make data base on Fri Jun 24 18:03:00 2022
 
  
