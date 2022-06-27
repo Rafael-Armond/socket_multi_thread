@@ -6,7 +6,7 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Jun 24 18:03:00 2022
+# Make data base, printed on Sun Jun 26 22:50:58 2022
 
 # Variables
 
@@ -59,7 +59,7 @@ PROGRAMW6432 = C:\Program Files
 # environment
 PROGRAMDATA = C:\ProgramData
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-ebfd74d5-4457-41b3-9551-03180a75e7a2-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-d18d17f8-c6f1-4294-ae62-0228b4c3053f-sock
 # environment
 VSCODE_CWD = C:\Users\DTI Digital\AppData\Local\Programs\Microsoft VS Code
 # default
@@ -91,7 +91,7 @@ ELECTRON_RUN_AS_NODE = 1
 # automatic
 %F = $(notdir $%)
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_19876_RSGLZKGDCUMFCNRO
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_21288_WWEAPYIZXKLXADQD
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
@@ -203,7 +203,7 @@ PROCESSOR_LEVEL = 6
 # environment
 FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
-VSCODE_PID = 19876
+VSCODE_PID = 21288
 # environment
 USERDOMAIN_ROAMINGPROFILE = DPCRAFAELMAIA
 # variable set hash-table stats:
@@ -215,9 +215,9 @@ USERDOMAIN_ROAMINGPROFILE = DPCRAFAELMAIA
 
 # Directories
 
-# . (key c:/Users/DTI Digital/Desktop/TP2_2019027148, mtime 1656102148): 11 files, no impossibilities.
+# . (key c:/Users/DTI Digital/Desktop/TP2_2019027148, mtime 1656294651): 9 files, no impossibilities.
 
-# 11 files, no impossibilities in 1 directories.
+# 9 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -289,12 +289,13 @@ clean:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 15 / storage = 116 B / avg = 7 B
-# current buf: size = 8162 B / used = 116 B / count = 15 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 13 / storage = 114 B / avg = 8 B
+# current buf: size = 8162 B / used = 114 B / count = 13 / avg = 8 B
 
-# strcache performance: lookups = 23 / hit rate = 34%
+# strcache performance: lookups = 21 / hit rate = 38%
 # hash-table stats:
-# Load=15/8192=0%, Rehash=0, Collisions=1/23=4%
-# Finished Make data base on Fri Jun 24 18:03:00 2022
+# Load=13/8192=0%, Rehash=0, Collisions=1/21=5%
+# Finished Make data base on Sun 
+ Jun 26 22:50:58 2022
 
  

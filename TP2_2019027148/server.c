@@ -66,7 +66,7 @@ int insert_new_equipment(void *data)
             if (equipments[i]->client_id != client_data->client_id)
             {
                 memset(buf, 0, BUFFER_SIZE);
-                if (equipments[i]->client_id < 10)
+                if (client_data->client_id < 10)
                 {
                     sprintf(buf, "01xxx0%d", client_data->client_id);
                 }
@@ -83,9 +83,9 @@ int insert_new_equipment(void *data)
     }
     else
     {
-        snprintf(buf, BUFFER_SIZE, "Equipment limit exceeded\n");
+        snprintf(buf, BUFFER_SIZE, "07xxxEquipment limit exceeded\n");
         send(client_data->client_socket, buf, BUFFER_SIZE, 0);
-        close(client_data->client_socket); // Verificar se realmente vai precisar fechar o socket
+        close(client_data->client_socket);
         return 0;
     }
 }
@@ -155,7 +155,6 @@ void *client_thread(void *data)
     addrtostr(client_addr, client_addrstr, BUFFER_SIZE);
 
     char buf[BUFFER_SIZE];
-    // char response[BUFFER_SIZE];
     char substr[3];
 
     while (1)
@@ -197,7 +196,7 @@ void *client_thread(void *data)
                 }
                 break;
             case 3:
-                strncpy(substr, buf + 5, 2);
+                strncpy(substr, buf + 4, 2);
                 substr[2] = '\0';
                 id_equipment_i = atoi(substr);
                 int equipment_found = 0;
@@ -248,7 +247,7 @@ void *client_thread(void *data)
                         if (equipments[i]->client_id != id_equipment_i)
                         {
                             memset(id_str, 0, 4);
-                            if (i < 10)
+                            if (i < 9)
                             {
                                 if (i == 1)
                                     sprintf(id_str, "0%d", equipments[i]->client_id);
@@ -327,7 +326,6 @@ int main(int argc, char **argv)
         struct sockaddr *client_addr = (struct sockaddr *)(&client_storage);
         socklen_t client_addrlen = sizeof(client_storage);
 
-        // Aceita uma conexão de cliente
         int client_socket = accept(server_socket, client_addr, &client_addrlen);
         if (client_socket == -1)
         {

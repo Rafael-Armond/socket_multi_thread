@@ -1,4 +1,3 @@
-make.exe --dry-run --always-make --keep-going --print-directory
 make.exe: Entering directory 'c:/Users/DTI Digital/Desktop/TP2_2019027148'
 gcc -Wall -c common.c
 gcc -Wall equipment.c common.o -lpthread -o equipment

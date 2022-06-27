@@ -1,6 +1,3 @@
 {
-    "C_Cpp.errorSquiggles": "Disabled",
-    "files.associations": {
-        "stdio.h": "c"
-    }
+    "makefile.extensionOutputFolder": "./.vscode"
 }

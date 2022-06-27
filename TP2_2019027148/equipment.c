@@ -14,8 +14,6 @@
 #define MAX_CLIENTS 15
 
 int equipment_id = 0;
-int id_equipments[15];
-int num_equipments_connected = 0;
 int target_equip_id = 0;
 
 struct client_data
@@ -75,14 +73,11 @@ void *receiver(void *data)
                     if (equip_id_int < 10)
                     {
                         printf("Equipment 0%d added\n", equip_id_int);
-                        id_equipments[num_equipments_connected] = equip_id_int;
                     }
                     else
                     {
                         printf("Equipment %d added\n", equip_id_int);
-                        id_equipments[num_equipments_connected] = equip_id_int;
                     }
-                    num_equipments_connected++;
                 }
                 break;
             case 2:
@@ -95,6 +90,7 @@ void *receiver(void *data)
                     printf("Equipment %d removed\n", id_equipment_i);
                 else if (id_equipment_i == equipment_id)
                 {
+                    equipment_id = 0;
                     printf("Successful removal\n");
                     exit(EXIT_SUCCESS);
                 }
@@ -119,6 +115,11 @@ void *receiver(void *data)
                 break;
             case 6:
                 printf("Target equipment not found\n");
+                break;
+            case 7:
+                memset(msg, 0, BUFFER_SIZE);
+                strcpy(msg, buf + 5);
+                printf("%s\n", msg);
                 break;
             default:
                 printf("nenhum comando reconhecido\n");
@@ -176,11 +177,6 @@ int main(int argc, char **argv)
     while (equipment_id == 0)
     {
         continue;
-    }
-
-    for (int i = 0; i < MAX_CLIENTS; i++)
-    {
-        id_equipments[i] = 0;
     }
 
     char substr[BUFFER_SIZE];
