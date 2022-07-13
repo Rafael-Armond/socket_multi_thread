@@ -10,6 +10,7 @@ do programa, espera por entradas do teclado enquanto que a thread espera por men
 servidor.
 \
 Desenho arquitetural geral do sistema
+\
 ![image](https://user-images.githubusercontent.com/34943649/178841500-e9a67dad-9e8a-414d-8d67-aaa5a7c481d5.png)
 \
 O fluxo da thread do cliente também é responsável por processar as informações que vêm do cliente.
