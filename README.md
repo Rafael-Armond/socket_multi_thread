@@ -1,26 +1,30 @@
 Trabalho prático número 2 da disciplina de Redes de Computadores. 
+\
 ##Introdução
+\
 O trabalho prático visa a implementação de um sistema que funciona no modelo de cliente e servidor,
 onde o servidor pode estabelecer conexão com múltiplos clientes simultaneamente. A comunicação
 entre cliente e servidor é feita utilizando sockets. O servidor consegue se conectar a múltiplos
 clientes utilizando sockets e threads. O cliente utiliza apenas uma thread, um fluxo, o fluxo principal
 do programa, espera por entradas do teclado enquanto que a thread espera por mensagens do
 servidor.
-
+\
 Desenho arquitetural geral do sistema
 ![image](https://user-images.githubusercontent.com/34943649/178841500-e9a67dad-9e8a-414d-8d67-aaa5a7c481d5.png)
-
+\
 O fluxo da thread do cliente também é responsável por processar as informações que vêm do cliente.
 As informações trafegam entre os nós utilizando código predeterminados, quando o código chega no
 cliente ou no servidor, este se encarrega de processar a informação conforme o código recebido. A
 maior parte dos códigos que trafega na rede vai com uma carga útil, onde o destinatário utiliza dessa
 carga no processamento da informação e resulta na exibição da informação correta no console.
+\
 ##Arquitetura
 Começando pela arquitetura do servidor, este tem a tarefa primordial de se conectar a múltiplos
 clientes simultaneamente. Para tal, o servidor utiliza múltiplos threads, cada vez que um cliente
 solicita estabelecimento de conexão com o servidor é feita uma verificação para checar se o número
 máximo de clientes não foi atingido e caso não tenha sido, uma nova thread é criada para
 “conversar” com o cliente.
+\
 Desenho arquitetural do servidor
 ![image](https://user-images.githubusercontent.com/34943649/178841990-d26325b8-c5b6-4a7f-bfbe-048b6e026261.png)
 
@@ -28,13 +32,15 @@ O cliente possui uma arquitetura para paralelizar a chegada de dados do servidor
 usuário pelo teclado. Cria-se uma única thread para aguardar dados do servidor enquanto o fluxo
 principal é responsável por aguardar dados do usuário e enviá-los ao servidor quando o usuário
 terminar o input de dados.
+\
 Desenho arquitetural do cliente (equipamento)
 ![image](https://user-images.githubusercontent.com/34943649/178842020-90686377-8161-4982-9a73-8cdac2fbac1b.png)
-
+\
 Desenho da comunicação entre o cliente e servidor
 ![image](https://user-images.githubusercontent.com/34943649/178842030-ce64d77b-a269-4dc6-a422-19a9d320ef21.png)
-
+\
 ##Servidor
+\
 O servidor é responsável por aceitar a conexão com o cliente, fechar a conexão com o cliente e
 fornecer informações e serviços ao cliente, conforme este solicite ao servidor.
 O servidor tem três variáveis de escopo global que são muito importantes para seu funcionamento
@@ -44,9 +50,12 @@ simultaneamente ao servidor. E a variável “numEquipmentsConnected”, do tipo
 representa o tamanho atual do vetor de equipamentos conectados. Por último, a variável do tipo
 inteiro “equipmentId”, que guarda o número que será atribuído ao identificador do equipamento que
 se conecta ao servidor.
+\
 O servidor recebe códigos e usa uma estrutura de controle “switch” para determinar o que fazer com
 cada código. Cada case do switch processa o código recebido de acordo com sua finalidade.
+\
 Códigos recebidos pelo servidor:
+\
   ● Código 1 - Inserir novos equipamentos/clientes: O servidor chama uma função para inserir
     novos clientes e passa as informações do cliente como parâmetro. A função
     “insert_new_equipment(void *data) é a função responsável por adicionar um novo
@@ -55,27 +64,33 @@ Códigos recebidos pelo servidor:
     de se conectar, o seu identificador (ID) e envia para todos os outros equipamentos
     conectados ao servidor uma mensagem informando que um novo equipamento se conectou
     e seu identificador. As mensagens seguem o formato estabelecido na descrição do TP.
+    \
   ● Código 2 - Desconectar um equipamento do servidor: O servidor chama uma função para
     desconectar um equipamento que está armazenado no vetor de equipamentos do servidor.
     Esta função é a “int remove_equipment(int equipment_id)”. Essa função procura o
     equipamento no vetor de equipamentos através do ID passado por parâmetro, remove o
     elemento e envia a mensagem correta para todos os outros equipamentos do vetor, que
     estão conectados ao servidor, informando que o equipamento X foi desconectado.
+    \
   ● Código 3 - Trata a requisição de informação de um equipamento especificado pelo seu
     identificador: Envia uma mensagem “requested information” como payload de uma
     mensagem para o equipamento requerido. O equipamento requerido imprime no seu console
     o payload. O servidor envia para o equipamento requerente um valor aleatório, com duas
     casas decimais, variando entre 1 e 10, como payload da mensagem enviada ao equipamento
     requerente.
+    \
   ● Código 4 - Trata requisição de listagem de equipamentos conectados ao servidor: O servidor
     percorre o vetor de equipamentos e cria um payload com todos os identificadores dos
     equipamentos conectados à rede. Vale lembrar que há uma lógica para excluir o ID do
     equipamento requerente. Após a montagem do payload o servidor envia de volta para o
     cliente uma mensagem contendo um código que será processado pelo cliente e o payload,
     que é uma string contendo todos os IDs dos equipamentos conectados ao servidor.
+    \
   ● Caso o código identificado pelo servidor não seja nenhum dos listados acima, o servidor
     imprime no console uma mensagem informando que o comando não foi reconhecido.
+    \
 ##Cliente
+\
 O cliente é responsável por capturar as entradas do teclado informadas pelo usuário e por receber
 mensagens do servidor.
 O cliente possui duas variáveis de escopo global importantes para seu funcionamento correto, são
